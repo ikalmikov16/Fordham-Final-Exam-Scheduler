@@ -7,25 +7,32 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Course',
+            name="Course",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('major', models.CharField(max_length=100)),
-                ('professor', models.CharField(max_length=100)),
-                ('major_tag', models.CharField(max_length=4)),
-                ('number', models.CharField(max_length=4)),
-                ('section', models.CharField(max_length=3)),
-                ('crn', models.CharField(max_length=5, unique=True)),
-                ('location', models.CharField(max_length=10)),
-                ('exam_start_time', models.TimeField()),
-                ('exam_end_time', models.TimeField()),
-                ('exam_date', models.DateField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=200)),
+                ("major", models.CharField(max_length=100)),
+                ("professor", models.CharField(max_length=100)),
+                ("major_tag", models.CharField(max_length=4)),
+                ("number", models.CharField(max_length=4)),
+                ("section", models.CharField(max_length=3)),
+                ("crn", models.CharField(max_length=5, unique=True)),
+                ("location", models.CharField(max_length=10)),
+                ("exam_start_time", models.TimeField()),
+                ("exam_end_time", models.TimeField()),
+                ("exam_date", models.DateField()),
             ],
         ),
     ]

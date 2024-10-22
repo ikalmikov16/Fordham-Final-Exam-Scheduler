@@ -6,22 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0001_initial'),
+        ("app", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='course',
-            name='exam_date',
+            model_name="course",
+            name="exam_date",
         ),
         migrations.AlterField(
-            model_name='course',
-            name='exam_end_time',
+            model_name="course",
+            name="exam_end_time",
             field=models.DateTimeField(),
         ),
         migrations.AlterField(
-            model_name='course',
-            name='exam_start_time',
+            model_name="course",
+            name="exam_start_time",
             field=models.DateTimeField(),
         ),
     ]

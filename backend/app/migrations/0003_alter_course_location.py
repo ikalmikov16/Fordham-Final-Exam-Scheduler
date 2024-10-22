@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0002_remove_course_exam_date_alter_course_exam_end_time_and_more'),
+        ("app", "0002_remove_course_exam_date_alter_course_exam_end_time_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='course',
-            name='location',
+            model_name="course",
+            name="location",
             field=models.CharField(max_length=20),
         ),
     ]
