@@ -3,7 +3,11 @@ import pandas as pd
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.status import (
+    HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST,
+    HTTP_404_NOT_FOUND,
+)
 from .serializers import CourseSerializer
 from django.db.models import Q
 from .models import Course
@@ -11,16 +15,50 @@ from fuzzywuzzy import process
 from .variables import majors
 
 
-# Create your views here.
 class CourseView(APIView):
-    def get(self, request):
-        # Get search query
-        query = str(request.GET.get("q", None))
+    def get(self, request, *args, **kwargs):
+        """
+        Handle Course get request. Determine whether to get search recommendations or course by id.
+        """
+        # Check for search query
+        query = request.GET.get("q", None)
 
+        if query is not None:
+            query = str(query)
+            return self.get_search_recommendations(query)
+
+        course_id = kwargs.get("id", None)
+
+        if course_id is not None:
+            course_id = int(course_id)
+            return self.get_course_by_id(course_id)
+
+        return Response({"error": "Invalid request"}, status=HTTP_400_BAD_REQUEST)
+
+    def get_course_by_id(self, course_id):
+        """
+        Get a Course by id
+        """
+        try:
+            course = Course.objects.get(id=course_id)
+            serializer = CourseSerializer(course)
+
+            return Response(serializer.data)
+        except Course.DoesNotExist:
+            return Response(
+                {"error": "Course does not exist"}, status=HTTP_404_NOT_FOUND
+            )
+
+    def get_search_recommendations(self, query):
+        """
+        Get a list of Courses as search recommendations
+        """
+        # Validate search query
         if not query:
             return Response(
                 {"error": "Search query is required."}, status=HTTP_400_BAD_REQUEST
             )
+
         query = query.strip()
 
         # Get list of all search possibilities from titles, professors, majors, majors and numbers, crns
@@ -72,6 +110,9 @@ class CourseView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        """
+        Process courses sheet and add them to database
+        """
         if "exam-schedule" not in request.FILES:
             return Response({"error": "No file provided"}, status=HTTP_400_BAD_REQUEST)
 
