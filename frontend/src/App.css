@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 } */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

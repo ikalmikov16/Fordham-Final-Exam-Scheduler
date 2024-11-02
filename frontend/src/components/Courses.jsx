@@ -1,6 +1,7 @@
 import React from "react";
+import "../styles/Courses.css";
 
-const Courses = ({ courses }) => {
+const Courses = ({ courses, removeCourse }) => {
   return (
     <div className="courses-list">
       {courses.map((course) => {
@@ -27,24 +28,39 @@ const Courses = ({ courses }) => {
 
         return (
           <div key={course.id} className="course-item">
-            <h3 className="course-title">{course.title}</h3>
-            <p className="course-info">
-              <strong>Course:</strong> {course.major_and_number} |{" "}
-              <strong>CRN:</strong> {course.crn}
-            </p>
-            <p className="course-info">
-              <strong>Professor:</strong> {course.professor}
-            </p>
-            <p className="course-info">
-              <strong>Location:</strong> {course.location}
-            </p>
-            <p className="course-exam">
-              <strong>Exam Date:</strong> {formattedDate}
-            </p>
-            <p className="course-exam">
-              <strong>Exam Time:</strong> {formattedStartTime} -{" "}
-              {formattedEndTime}
-            </p>
+            <button
+              className="remove-button"
+              onClick={() => removeCourse(course.id)}
+            >
+              ×
+            </button>
+            <div className="course-left">
+              <h3 className="course-title">{course.title}</h3>
+              <p className="course-info">
+                <strong>Professor:</strong> {course.professor}
+              </p>
+            </div>
+            <div className="course-middle">
+              <p className="course-info">
+                <strong>Course:</strong> {course.major_and_number} |{" "}
+                {course.section}
+              </p>
+              <p>
+                <strong>CRN:</strong> {course.crn}
+              </p>
+            </div>
+            <div className="course-right">
+              <p className="course-exam">
+                <strong>{formattedDate}</strong>
+              </p>
+              <p className="course-exam">
+                <strong>Exam Time:</strong> {formattedStartTime} -{" "}
+                {formattedEndTime}
+              </p>
+              <p className="course-info">
+                <strong>Location:</strong> {course.location}
+              </p>
+            </div>
           </div>
         );
       })}

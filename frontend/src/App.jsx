@@ -13,18 +13,24 @@ function App() {
     setCourses((prevCourses) => [...prevCourses, course]);
   };
 
+  const removeCourse = (courseId) => {
+    console.log("Removing course with id:", courseId);
+    setCourses((prevCourses) =>
+      prevCourses.filter((course) => course.id !== courseId)
+    );
+  };
+
   useEffect(() => {
     console.log(courses);
   }, [courses]);
 
   return (
     <>
-      <NavBar/>
-      <br/>
-      <br/>
-      <div>
-        <SearchBar addCourse={addCourse}/>
-        <Courses courses={courses}/>
+      <NavBar />
+
+      <div className="app-container">
+        <SearchBar addCourse={addCourse} />
+        <Courses courses={courses} removeCourse={removeCourse} />
         {/* <Schedule courses={courses}/> */}
       </div>
     </>
