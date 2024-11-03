@@ -10,11 +10,15 @@ import { Scheduler, View } from "@aldabil/react-scheduler";
 function App() {
   const [courses, setCourses] = useState([]);
   const [events, setEvents] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date(2024, 11, 1));
 
   const addCourse = (course) => {
     setCourses((prevCourses) => [...prevCourses, course]);
     const startTime = new Date(course.exam_start_time);
     const endTime = new Date(course.exam_end_time);
+
+    setSelectedDate(startTime);
+
     const event = {
       id: course.id, // or any unique identifier
       title: course.title,
@@ -47,14 +51,23 @@ function App() {
   return (
     <>
       <NavBar />
-
-      <div className="app-container">
+      <div className="search-bar-container">
         <SearchBar addCourse={addCourse} />
-        <Courses courses={courses} removeCourse={removeCourse} />
-        {/* <Schedule courses={courses}/> */}
-        <Scheduler events={events} view="month">
-          <View />
-        </Scheduler>
+      </div>
+
+      {/* Main content container */}
+      <div className="main-content">
+        <div className="courses-container">
+          <Courses courses={courses} removeCourse={removeCourse} />
+        </div>
+        <div className="calendar-container">
+          <Scheduler
+            events={events}
+            view="month"
+            selectedDate={selectedDate}
+            onSelectedDateChange={setSelectedDate}
+          />
+        </div>
       </div>
     </>
   );
