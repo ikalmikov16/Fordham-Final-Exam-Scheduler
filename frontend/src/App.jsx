@@ -29,6 +29,13 @@ function App() {
         .then(() => {
           gapi.auth2.getAuthInstance().isSignedIn.listen(setIsSignedIn);
           setIsSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+          // Load the Calendar API
+          return gapi.client.load("calendar", "v3");
+        })
+        .catch((error) => {
+          console.error("Error initializing GAPI client:", error);
+          alert("Failed to initialize Google API client.");
         });
     }
 
@@ -74,25 +81,26 @@ function App() {
   const handleSignOut = () => {
     gapi.auth2.getAuthInstance().signOut();
   };
-
   const exportToGoogleCalendar = () => {
     if (!isSignedIn) {
       alert("You need to sign in first.");
       return;
     }
 
-    events.forEach((event) => {
+    let successCount = 0; // Track successful insertions
+
+    events.forEach((event, index) => {
       const eventResource = {
         summary: event.title,
         location: event.location,
         description: event.description,
         start: {
           dateTime: event.start.toISOString(),
-          timeZone: "America/New_York", // Adjust to your timezone
+          timeZone: "America/New_York",
         },
         end: {
           dateTime: event.end.toISOString(),
-          timeZone: "America/New_York", // Adjust to your timezone
+          timeZone: "America/New_York",
         },
       };
 
@@ -104,14 +112,25 @@ function App() {
         .then(
           (response) => {
             console.log("Event created: ", response);
+            successCount++;
+
+            // Display success message once all events are added
+            if (successCount === events.length) {
+              alert(
+                "All events have been successfully added to Google Calendar!"
+              );
+            }
           },
           (error) => {
             console.error("Error creating event: ", error);
+            alert(
+              `Failed to create event "${event.title}": ${error.result.error.message}`
+            );
           }
         );
     });
   };
-
+  
   useEffect(() => {
     console.log(courses);
   }, [courses]);
