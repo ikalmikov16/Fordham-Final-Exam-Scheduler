@@ -11,11 +11,15 @@ function App() {
   const [courses, setCourses] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 11, 1));
+  const colors = ["#FF5733", "#33FF57", "#3357FF"];
 
   const addCourse = (course) => {
     setCourses((prevCourses) => [...prevCourses, course]);
     const startTime = new Date(course.exam_start_time);
     const endTime = new Date(course.exam_end_time);
+
+    const eventIndex = events.length % colors.length; // Calculate the index for the color
+    const eventColor = colors[eventIndex];
 
     setSelectedDate(startTime);
 
@@ -26,6 +30,7 @@ function App() {
       end: endTime,
       location: course.location,
       description: `Course: ${course.major_and_number}, Professor: ${course.professor}`,
+      color: eventColor,
     };
     setEvents((prevEvents) => [...prevEvents, event]);
   };
