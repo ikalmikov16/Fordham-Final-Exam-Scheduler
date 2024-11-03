@@ -85,3 +85,14 @@
     max-width: 100%; /* Full width on smaller screens */
   }
 }
+.search-bar-container button {
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.search-bar-container button:hover {
+  transform: scale(1.05);
+}
+
+.search-bar-container .btn {
+  margin: 5px; /* Add spacing between buttons */
+}
