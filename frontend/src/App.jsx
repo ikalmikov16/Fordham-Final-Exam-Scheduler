@@ -73,23 +73,19 @@ function App() {
       prevEvents.filter((event) => event.id !== courseId)
     );
   };
-
-  const handleAuthClick = () => {
-    gapi.auth2.getAuthInstance().signIn();
-  };
-
-  const handleSignOut = () => {
-    gapi.auth2.getAuthInstance().signOut();
-  };
-  const exportToGoogleCalendar = () => {
-    if (!isSignedIn) {
-      alert("You need to sign in first.");
-      return;
+  const handleAuthAndExport = () => {
+    if (isSignedIn) {
+      exportToGoogleCalendar();
+    } else {
+      gapi.auth2.getAuthInstance().signIn();
+      exportToGoogleCalendar();
     }
+  };
 
-    let successCount = 0; // Track successful insertions
+  const exportToGoogleCalendar = () => {
+    let successCount = 0;
 
-    events.forEach((event, index) => {
+    events.forEach((event) => {
       const eventResource = {
         summary: event.title,
         location: event.location,
@@ -111,10 +107,7 @@ function App() {
         })
         .then(
           (response) => {
-            console.log("Event created: ", response);
             successCount++;
-
-            // Display success message once all events are added
             if (successCount === events.length) {
               alert(
                 "All events have been successfully added to Google Calendar!"
@@ -122,7 +115,6 @@ function App() {
             }
           },
           (error) => {
-            console.error("Error creating event: ", error);
             alert(
               `Failed to create event "${event.title}": ${error.result.error.message}`
             );
@@ -139,22 +131,61 @@ function App() {
     console.log("Events updated: ", events);
   }, [events]);
 
+  const handleSignOut = () => {
+    gapi.auth2.getAuthInstance().signOut();
+    setIsSignedIn(false);
+  };
+
+  const generateICS = () => {
+    let icsFileContent = "BEGIN:VCALENDAR\nVERSION:2.0\n";
+    events.forEach((event) => {
+      icsFileContent +=
+        "BEGIN:VEVENT\n" +
+        `SUMMARY:${event.title}\n` +
+        `LOCATION:${event.location}\n` +
+        `DESCRIPTION:${event.description}\n` +
+        `DTSTART:${event.start.toISOString().replace(/-|:|\.\d{3}/g, "")}\n` +
+        `DTEND:${event.end.toISOString().replace(/-|:|\.\d{3}/g, "")}\n` +
+        "END:VEVENT\n";
+    });
+    icsFileContent += "END:VCALENDAR";
+
+    const blob = new Blob([icsFileContent], { type: "text/calendar" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "events.ics";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const exportToAppleCalendar = () => {
+    generateICS();
+  };
   return (
     <>
       <NavBar />
       <SearchBar addCourse={addCourse} />
       <div className="search-bar-container">
-        {isSignedIn ? (
-          <button className="btn btn-danger me-2" onClick={handleSignOut}>
-            Sign Out
-          </button>
-        ) : (
-          <button className="btn btn-primary me-2" onClick={handleAuthClick}>
-            Sign In with Google
-          </button>
+        <button className="btn btn-primary" onClick={handleAuthAndExport}>
+          {isSignedIn
+            ? "Export to Google Calendar"
+            : "Sign In & Export to Google Calendar"}
+        </button>
+        {isSignedIn && (
+          <>
+            <button className="btn btn-danger ms-2" onClick={handleSignOut}>
+              Sign Out
+            </button>
+          </>
         )}
-        <button className="btn btn-success" onClick={exportToGoogleCalendar}>
-          Export to Google Calendar
+        <button
+          className="btn btn-secondary ms-2"
+          onClick={exportToAppleCalendar}
+        >
+          Export to Apple Calendar
         </button>
       </div>
 
