@@ -51,38 +51,47 @@
 .main-content {
   display: flex;
   justify-content: space-between;
-  margin: 0 20px;
+  margin: 0 0.5rem;
 }
 
 /* Left and right containers */
 .courses-container {
-  flex: 1; /* Controls size of the courses section */
-  margin-right: 10px;
+  flex: 3; /* Controls size of the courses section */
+  display: flex;
+  justify-content: flex-end;
 }
 
 .calendar-container {
-  flex: 1; /* Controls size of the calendar section */
+  flex: 4; /* Controls size of the calendar section */
+  display: flex;
+  justify-content: flex-start;
+}
+.calendar{
+  max-width: 800px;
+  width: 100%;
+  padding: 1rem;
 }
 
 /* Control the calendar size */
-.calendar-container .rs-scheduler {
-  max-width: 80%;
-}
+/* .calendar-container .rs-scheduler {
+  max-width: 400px;
+  padding: 20px;
+} */
 
-@media (max-width: 768px) {
+@media (max-width: 750px) {
   .main-content {
     flex-direction: column; /* Stack courses and calendar vertically */
     align-items: center; /* Center items when stacked */
   }
 
   .courses-container {
-    margin-right: 0; /* Remove right margin when stacked */
-    margin-bottom: 20px; /* Add space below courses when stacked */
-    max-width: 100%; /* Full width on smaller screens */
+    width: 100%;
+    justify-content: center;
   }
 
   .calendar-container {
-    max-width: 100%; /* Full width on smaller screens */
+    width: 100%;
+    justify-content: center;
   }
 }
 .search-bar-container button {

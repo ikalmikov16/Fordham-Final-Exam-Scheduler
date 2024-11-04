@@ -43,7 +43,22 @@ function App() {
   }, []);
 
   const addCourse = (course) => {
-    setCourses((prevCourses) => [...prevCourses, course]);
+    const courseExists = courses.some(c => c.id === course.id);
+    const updatedCourses = [...courses, course];
+
+    if (courseExists) {
+        // Alert the user if the course is already selected
+        alert('You have already selected this course.');
+        return; // Exit the function early
+    }
+
+    // Sort the courses by exam_start_time
+    updatedCourses.sort((a, b) => {
+      return new Date(a.exam_start_time) - new Date(b.exam_start_time);
+    });
+
+    setCourses(updatedCourses);
+
     const startTime = new Date(course.exam_start_time);
     const endTime = new Date(course.exam_end_time);
 
@@ -195,26 +210,28 @@ function App() {
           <Courses courses={courses} removeCourse={removeCourse} />
         </div>
         <div className="calendar-container">
-          <Scheduler
-            events={events}
-            view="month"
-            selectedDate={selectedDate}
-            onSelectedDateChange={setSelectedDate}
-            agenda={false}
-            month={{
-              startHour: 8, // Start at 8 AM for month view
-              endHour: 22, // End at 10 PM (22 in 24-hour format) for month view
-            }}
-            week={{
-              startHour: 8, // Start at 8 AM for week view
-              endHour: 22, // End at 10 PM for week view
-            }}
-            day={{
-              startHour: 8, // Start at 8 AM for day view
-              endHour: 22, // End at 10 PM for day view
-            }}
-            height={500}
-          />
+          <div className="calendar">
+            <Scheduler
+              events={events}
+              view="month"
+              selectedDate={selectedDate}
+              onSelectedDateChange={setSelectedDate}
+              agenda={false}
+              month={{
+                startHour: 8, // Start at 8 AM for month view
+                endHour: 22, // End at 10 PM (22 in 24-hour format) for month view
+              }}
+              week={{
+                startHour: 8, // Start at 8 AM for week view
+                endHour: 22, // End at 10 PM for week view
+              }}
+              day={{
+                startHour: 8, // Start at 8 AM for day view
+                endHour: 22, // End at 10 PM for day view
+              }}
+              height={500}
+            />
+          </div>
         </div>
       </div>
     </>
