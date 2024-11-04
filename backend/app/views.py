@@ -1,5 +1,6 @@
 from itertools import chain
 import pandas as pd
+import pytz
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -134,6 +135,16 @@ class CourseView(APIView):
                 if len(crn) != 5:
                     crn = course_info[4]
 
+                # Mark exam times as EST and convert to UTC
+                start_time_est = pytz.timezone("America/New_York").localize(
+                    row["Start Time"]
+                )
+                end_time_est = pytz.timezone("America/New_York").localize(
+                    row["End Time"]
+                )
+                start_time_utc = start_time_est.astimezone(pytz.UTC)
+                end_time_utc = end_time_est.astimezone(pytz.UTC)
+
                 major = majors.get(str(row["Department"]).strip(), "")
                 if not major:
                     print(row["Department"])
@@ -148,8 +159,8 @@ class CourseView(APIView):
                     "section": section,
                     "crn": crn,
                     "location": row["Location"],
-                    "exam_start_time": row["Start Time"],
-                    "exam_end_time": row["End Time"],
+                    "exam_start_time": start_time_utc,
+                    "exam_end_time": end_time_utc,
                 }
 
                 serializer = CourseSerializer(data=course)
