@@ -3,20 +3,19 @@ import "../styles/Courses.css";
 
 const Courses = ({ courses, removeCourse }) => {
   return (
-    <div className="courses-list">
+    <div className="course-list">
       {courses.map((course) => {
-        // Parse the start and end times
         const startTime = new Date(course.exam_start_time);
         const endTime = new Date(course.exam_end_time);
 
-        // Format date to "Day, Month Date" (e.g., "Tuesday, December 10")
+        // Format date to "Day, Month Date" (e.g., "Tuesday, December 10") in EST
         const formattedDate = startTime.toLocaleDateString("en-US", {
           weekday: "long",
           month: "long",
           day: "numeric",
         });
 
-        // Format start and end times to "HH:MM AM/PM"
+        // Format start and end times to "HH:MM AM/PM" in EST
         const formattedStartTime = startTime.toLocaleTimeString("en-US", {
           hour: "2-digit",
           minute: "2-digit",
@@ -28,38 +27,28 @@ const Courses = ({ courses, removeCourse }) => {
 
         return (
           <div key={course.id} className="course-item">
-            <button
+            <div
               className="remove-button"
               onClick={() => removeCourse(course.id)}
             >
-              ×
-            </button>
+              <div className="minus" />
+            </div>
+
             <div className="course-left">
-              <h3 className="course-title">{course.title}</h3>
-              <p className="course-info">
-                <strong>Professor:</strong> {course.professor}
-              </p>
+              <div className="course-title">{course.title}</div>
+              <div className="course-info">{course.professor}</div>
+              <div className="course-info">
+                {course.major_and_number}, {course.section}
+              </div>
+              <div className="course-info">CRN: {course.crn}</div>
             </div>
-            <div className="course-middle">
-              <p className="course-info">
-                <strong>Course:</strong> {course.major_and_number} |{" "}
-                {course.section}
-              </p>
-              <p>
-                <strong>CRN:</strong> {course.crn}
-              </p>
-            </div>
+
             <div className="course-right">
-              <p className="course-exam">
-                <strong>{formattedDate}</strong>
-              </p>
-              <p className="course-exam">
-                <strong>Exam Time:</strong> {formattedStartTime} -{" "}
-                {formattedEndTime}
-              </p>
-              <p className="course-info">
-                <strong>Location:</strong> {course.location}
-              </p>
+              <div className="course-exam">{formattedDate}</div>
+              <div className="course-exam">
+                {formattedStartTime} - {formattedEndTime}
+              </div>
+              <div className="course-info">{course.location}</div>
             </div>
           </div>
         );

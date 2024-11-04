@@ -1,13 +1,17 @@
-.courses-list {
+/* .course-list {
   display: flex;
   flex-direction: column;
+  max-width: 700px;
   gap: 10px;
 }
 
 .course-item {
-  position: relative;
+  // position: relative;
   display: flex;
+  
+  width: 100%;
   justify-content: space-between;
+
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -19,15 +23,14 @@
 }
 
 .course-left,
-.course-middle,
 .course-right {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 3px;
 }
 
 .remove-button {
-  position: absolute;
+  position: relative;
   top: 5px;
   right: 5px;
   background-color: transparent;
@@ -39,4 +42,120 @@
 
 .remove-button:hover {
   color: darkred;
+} */
+
+/* Outer container holding the list of courses */
+.course-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem; /* Spacing between each course item */
+  width: 100%;
+  min-width: 300px;
+  max-width: 600px;
+  /* margin: 0 auto; */
+  padding: 1rem;
 }
+
+/* Each course item container */
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  background-color: white; /* Light background for contrast */
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: background-color 0.5s ease;
+}
+
+.course-item:hover {
+  background-color: #f9f9f9;
+}
+
+/* Remove button styling */
+/* .remove-button {
+  position: absolute;
+  top: 0rem;
+  right: 0.1rem;
+  background: none;
+  border: none;
+  color: #ff5c5c;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  color: #ff1a1a;
+} */
+
+.remove-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+
+  width: 16px;
+  height: 16px;
+  background-color: rgb(255, 58, 58);
+  border: none;
+  border-radius: 50%;
+  
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+  background-color: rgb(183, 0, 0);
+}
+
+.minus {
+  width: 8px;
+  height: 2px;
+  background-color: white;
+  border-radius: 1px;
+}
+
+/* Left side of the course item */
+.course-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  /* white-space: nowrap; */
+}
+
+/* Right side of the course item, aligned to the right */
+.course-right {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 0.3rem;
+  align-items: flex-end;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Course title styling */
+.course-title {
+  font-size: 1.5rem; /* Larger size for the course title */
+  font-weight: bold;
+  margin-bottom: -0.3rem;
+}
+
+/* General styling for course information */
+.course-info {
+  font-size: 1rem;
+  color: #000000;
+}
+
+/* Course exam date and time styling */
+.course-exam {
+  font-size: 1rem;
+  color: #000000;
+}
+
