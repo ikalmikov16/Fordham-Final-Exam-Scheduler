@@ -1,0 +1,32 @@
+.schedule-buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    max-width: 800px;
+    width: 100%;
+}
+
+.schedule-container {
+    flex: 4;
+    display: flex;
+    justify-content: flex-start;
+    padding: 1rem;
+}
+@media (max-width: 750px) {
+    .schedule-container {
+      width: 100%;
+      justify-content: center;
+    }
+}
+
+.schedule {
+    /* max-width: 800px; */
+    width: 100%;
+    padding: 1rem;
+}
+
+.export-button {
+    display: flex;
+    justify-content: center;
+}

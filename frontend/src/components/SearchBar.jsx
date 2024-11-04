@@ -57,7 +57,7 @@ const SearchBar = ({ addCourse }) => {
     console.log(suggestion);
     addCourse(suggestion); // Call addCourse to update the selected courses in the parent
     setSuggestions([]);
-    setValue(''); // Clear the input field
+    setValue(""); // Clear the input field
   };
 
   // Define input props for Autosuggest
@@ -68,15 +68,17 @@ const SearchBar = ({ addCourse }) => {
   };
 
   return (
-    <Autosuggest
-      suggestions={suggestions}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
-      getSuggestionValue={(suggestion) => suggestion.title}
-      renderSuggestion={renderSuggestion}
-      inputProps={inputProps}
-      onSuggestionSelected={onSuggestionSelected}
-    />
+    <div className="searchbar-container">
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={(suggestion) => suggestion.title}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        onSuggestionSelected={onSuggestionSelected}
+      />
+    </div>
   );
 };
 
