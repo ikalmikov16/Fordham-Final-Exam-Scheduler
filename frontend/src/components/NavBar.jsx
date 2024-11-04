@@ -8,16 +8,7 @@ const NavBar = () => {
   return (
     <Navbar data-bs-theme="dark" className="navbar">
       <Container>
-        <Navbar.Brand href="#home">
-          <img
-            src={logo}
-            alt="Fordham Logo"
-            // width="400"
-            height="35"
-            className="d-inline-block align-top logo-white"
-          />{" "}
-          {/* Fordham Final Exam Scheduler */}
-        </Navbar.Brand>
+        <Navbar.Brand>Fordham Final Exams</Navbar.Brand>
       </Container>
     </Navbar>
   );
