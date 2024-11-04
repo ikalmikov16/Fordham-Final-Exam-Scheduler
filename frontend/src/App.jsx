@@ -130,7 +130,7 @@ function App() {
         );
     });
   };
-  
+
   useEffect(() => {
     console.log(courses);
   }, [courses]);
@@ -169,6 +169,20 @@ function App() {
             view="month"
             selectedDate={selectedDate}
             onSelectedDateChange={setSelectedDate}
+            agenda={false}
+            month={{
+              startHour: 8, // Start at 8 AM for month view
+              endHour: 22, // End at 10 PM (22 in 24-hour format) for month view
+            }}
+            week={{
+              startHour: 8, // Start at 8 AM for week view
+              endHour: 22, // End at 10 PM for week view
+            }}
+            day={{
+              startHour: 8, // Start at 8 AM for day view
+              endHour: 22, // End at 10 PM for day view
+            }}
+            height={500}
           />
         </div>
       </div>
