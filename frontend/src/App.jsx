@@ -5,6 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { gapi } from "gapi-script";
 import SearchBar from "./components/SearchBar";
 import Courses from "./components/Courses";
+import useGoogleAuth from "./hooks/useGoogleAuth";
+import GoogleCalendar from "./components/GoogleCalendar";
+import AppleCalendar from "./components/AppleCalendar";
 import Schedule from "./components/Schedule";
 import { Scheduler, View } from "@aldabil/react-scheduler";
 
@@ -17,6 +20,8 @@ function App() {
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 11, 1));
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const { signIn, signOut, exportToGoogleCalendar } = useGoogleAuth(events);
+
   const colors = ["#FF5733", "#33FF57", "#3357FF"];
 
   useEffect(() => {
@@ -27,15 +32,18 @@ function App() {
           scope: SCOPES,
         })
         .then(() => {
-          gapi.auth2.getAuthInstance().isSignedIn.listen(setIsSignedIn);
-          setIsSignedIn(gapi.auth2.getAuthInstance().isSignedIn.get());
+          const authInstance = gapi.auth2.getAuthInstance();
+          authInstance.isSignedIn.listen(setIsSignedIn);
+          setIsSignedIn(authInstance.isSignedIn.get());
 
           // Load the Calendar API
           return gapi.client.load("calendar", "v3");
         })
         .catch((error) => {
           console.error("Error initializing GAPI client:", error);
-          alert("Failed to initialize Google API client.");
+          alert(
+            "Failed to initialize Google API client. Please check your credentials."
+          );
         });
     }
 
@@ -88,55 +96,6 @@ function App() {
       prevEvents.filter((event) => event.id !== courseId)
     );
   };
-  const handleAuthAndExport = () => {
-    if (isSignedIn) {
-      exportToGoogleCalendar();
-    } else {
-      gapi.auth2.getAuthInstance().signIn();
-      exportToGoogleCalendar();
-    }
-  };
-
-  const exportToGoogleCalendar = () => {
-    let successCount = 0;
-
-    events.forEach((event) => {
-      const eventResource = {
-        summary: event.title,
-        location: event.location,
-        description: event.description,
-        start: {
-          dateTime: event.start.toISOString(),
-          timeZone: "America/New_York",
-        },
-        end: {
-          dateTime: event.end.toISOString(),
-          timeZone: "America/New_York",
-        },
-      };
-
-      gapi.client.calendar.events
-        .insert({
-          calendarId: "primary",
-          resource: eventResource,
-        })
-        .then(
-          (response) => {
-            successCount++;
-            if (successCount === events.length) {
-              alert(
-                "All events have been successfully added to Google Calendar!"
-              );
-            }
-          },
-          (error) => {
-            alert(
-              `Failed to create event "${event.title}": ${error.result.error.message}`
-            );
-          }
-        );
-    });
-  };
 
   useEffect(() => {
     console.log(courses);
@@ -145,11 +104,6 @@ function App() {
   useEffect(() => {
     console.log("Events updated: ", events);
   }, [events]);
-
-  const handleSignOut = () => {
-    gapi.auth2.getAuthInstance().signOut();
-    setIsSignedIn(false);
-  };
 
   const generateICS = () => {
     let icsFileContent = "BEGIN:VCALENDAR\nVERSION:2.0\n";
@@ -176,32 +130,17 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
-  const exportToAppleCalendar = () => {
-    generateICS();
-  };
   return (
     <>
       <NavBar />
       <SearchBar addCourse={addCourse} />
       <div className="search-bar-container">
-        <button className="btn btn-primary" onClick={handleAuthAndExport}>
-          {isSignedIn
-            ? "Export to Google Calendar"
-            : "Sign In & Export to Google Calendar"}
-        </button>
-        {isSignedIn && (
-          <>
-            <button className="btn btn-danger ms-2" onClick={handleSignOut}>
-              Sign Out
-            </button>
-          </>
-        )}
-        <button
-          className="btn btn-secondary ms-2"
-          onClick={exportToAppleCalendar}
-        >
-          Export to Apple Calendar
-        </button>
+        <GoogleCalendar
+          isSignedIn={isSignedIn}
+          onExport={isSignedIn ? exportToGoogleCalendar : signIn}
+          onSignOut={signOut}
+        />
+        <AppleCalendar onExport={generateICS} />
       </div>
 
       {/* Main content container */}
