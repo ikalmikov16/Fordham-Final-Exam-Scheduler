@@ -18,6 +18,9 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
   const { signIn, signOut, exportToGoogleCalendar } = useGoogleAuth(events);
   const colors = ["#FF5733", "#33FF57", "#3357FF"];
 
+  const [view, setView] = useState("month");
+  //Sets the view as month
+
   const addEvent = (course) => {
     const startTime = new Date(course.exam_start_time);
     const endTime = new Date(course.exam_end_time);
@@ -123,8 +126,11 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
           <Scheduler
             events={events}
             view="month"
+            key={`${view}-${selectedDate}`}
+            //Uses a key to change the view
+            onViewChange={(newView) => setView(newView)}
+            //Triggers a new view when a new selected date is set
             selectedDate={selectedDate}
-            onSelectedDateChange={setSelectedDate}
             month={{
               weekStartOn: 1,
               navigation: true,
