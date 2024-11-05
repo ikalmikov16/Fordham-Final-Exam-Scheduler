@@ -125,7 +125,7 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
         <div className="schedule">
           <Scheduler
             events={events}
-            view="month"
+            view={view}
             key={`${view}-${selectedDate}`}
             //Uses a key to change the view
             onViewChange={(newView) => setView(newView)}
