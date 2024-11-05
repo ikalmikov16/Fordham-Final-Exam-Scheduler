@@ -2,7 +2,7 @@
     flex: 4;
     display: flex;
     justify-content: flex-start;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 @media (max-width: 750px) {
@@ -30,9 +30,13 @@
     padding: 1rem;
     margin-top: 1rem;
     border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     max-height: 600px;
     overflow-y: auto;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
 
+.schedule:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
