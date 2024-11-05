@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", os.getenv("RENDER_HOST")]
+ALLOWED_HOSTS = ["localhost", os.getenv("RENDER_BACKEND_HOST"), os.getenv("RENDER_FRONTEND_HOST")]
 
 
 # Application definition
