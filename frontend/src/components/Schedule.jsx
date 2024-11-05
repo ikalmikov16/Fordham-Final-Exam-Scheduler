@@ -28,20 +28,20 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
     setSelectedDate(startTime);
 
     const event = {
-      id: course.id, // or any unique identifier
+      event_id: course.id, // or any unique identifier
       title: course.title,
       start: startTime,
       end: endTime,
       location: course.location,
       description: `Course: ${course.major_and_number}, Professor: ${course.professor}`,
-      color: eventColor,
+      // color: eventColor,
     };
     setEvents((prevEvents) => [...prevEvents, event]);
   };
 
   const removeEvent = (courseId) => {
     setEvents((prevEvents) =>
-      prevEvents.filter((event) => event.id !== courseId)
+      prevEvents.filter((event) => event.event_id !== courseId)
     );
   };
 
@@ -125,18 +125,15 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
             view="month"
             selectedDate={selectedDate}
             onSelectedDateChange={setSelectedDate}
-            editable={false}
-            // agenda={true}
             month={{
-              weekDays: [0, 1, 2, 3, 4, 5, 6],
               weekStartOn: 1,
-              // cellRenderer?:(props: CellProps) => JSX.Element,
               navigation: true,
               disableGoToDay: false,
               startHour: 8, // Start at 8 AM for month view
               endHour: 22, // End at 10 PM (22 in 24-hour format) for month view
             }}
             week={{
+              weekStartOn: 1,
               startHour: 8, // Start at 8 AM for week view
               endHour: 22, // End at 10 PM for week view
             }}
@@ -144,7 +141,10 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
               startHour: 8, // Start at 8 AM for day view
               endHour: 22, // End at 10 PM for day view
             }}
-            height={500}
+            agenda={false}
+            editable={false}
+            deletable={false}
+            draggable={false}
           />
         </div>
       </div>

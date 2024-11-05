@@ -5,6 +5,8 @@ const Courses = ({ courses, removeCourse }) => {
   return (
     <div className="courses-container">
       <div className="course-list">
+        <h2>My Exams</h2>
+
         {courses.map((course) => {
           const startTime = new Date(course.exam_start_time);
           const endTime = new Date(course.exam_end_time);
