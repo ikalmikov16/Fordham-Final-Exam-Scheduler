@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = False
 
 ALLOWED_HOSTS = [
+    "*",
     "localhost",
     os.getenv("RENDER_BACKEND_HOST"),
     os.getenv("RENDER_FRONTEND_HOST"),
