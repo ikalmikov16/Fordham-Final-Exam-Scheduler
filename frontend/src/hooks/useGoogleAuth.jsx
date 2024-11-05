@@ -2,9 +2,8 @@
 import { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
 
-const CLIENT_ID =
-  "31505105774-0b5c57eb0m8jpvpa39rpsd7uoeh2nn55.apps.googleusercontent.com"; // Replace with your Client ID
-const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+const SCOPES = import.meta.env.VITE_SCOPES;
 
 export default function useGoogleAuth(events) {
   const [isSignedIn, setIsSignedIn] = useState(false);

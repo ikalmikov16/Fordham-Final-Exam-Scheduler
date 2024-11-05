@@ -7,18 +7,18 @@ import "../styles/Schedule.css";
 
 // Setup the localizer by providing the moment (or globalize, or Luxon) Object
 // to the correct localizer.
-const CLIENT_ID =
-  "31505105774-0b5c57eb0m8jpvpa39rpsd7uoeh2nn55.apps.googleusercontent.com"; // Replace with your Client ID
-const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+const SCOPES = import.meta.env.VITE_SCOPES;
 
 const Schedule = ({ addEventCallback, removeEventCallback }) => {
   const [events, setEvents] = useState([]);
+  const [view, setView] = useState("month");
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 11, 1));
   const [isSignedIn, setIsSignedIn] = useState(false);
+  
   const { signIn, signOut, exportToGoogleCalendar } = useGoogleAuth(events);
   const colors = ["#FF5733", "#33FF57", "#3357FF"];
 
-  const [view, setView] = useState("month");
   //Sets the view as month
 
   const addEvent = (course) => {
