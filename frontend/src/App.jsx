@@ -1,81 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SearchBar from "./components/SearchBar";
-import Courses from "./components/Courses";
-import Schedule from "./components/Schedule";
-import PrivacyPolicy from "./components/PrivacyPolicy";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import SchedulerPage from "./pages/SchedulerPage";
 
 function App() {
-  const [courses, setCourses] = useState([]);
-  const addEventRef = useRef(null);
-  const removeEventRef = useRef(null);
-
-  const addCourse = (course) => {
-    const courseExists = courses.some((c) => c.id === course.id);
-    const updatedCourses = [...courses, course];
-
-    if (courseExists) {
-      // Alert the user if the course is already selected
-      alert("You have already selected this course.");
-      return; // Exit the function early
-    }
-
-    // Sort the courses by exam_start_time
-    updatedCourses.sort((a, b) => {
-      return new Date(a.exam_start_time) - new Date(b.exam_start_time);
-    });
-
-    setCourses(updatedCourses);
-
-    // Add event in Schedule
-    if (addEventRef.current) {
-      addEventRef.current(course);
-    }
-  };
-
-  const removeCourse = (courseId) => {
-    console.log("Removing course with id:", courseId);
-    setCourses((prevCourses) =>
-      prevCourses.filter((course) => course.id !== courseId)
-    );
-
-    // Remove course from events
-    if (removeEventRef.current) {
-      removeEventRef.current(courseId);
-    }
-  };
-
-  useEffect(() => {
-    console.log(courses);
-  }, [courses]);
-
   return (
-    <Router>
+    <>
       <NavBar />
-      <div className="app-container">
+      <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <SearchBar addCourse={addCourse} />
-                <div className="courses-schedule-container">
-                  <Courses courses={courses} removeCourse={removeCourse} />
-                  <Schedule
-                    addEventCallback={(fn) => (addEventRef.current = fn)}
-                    removeEventCallback={(fn) => (removeEventRef.current = fn)}
-                  />
-                </div>
-              </>
-            }
-          />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/" element={<SchedulerPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </>
   );
 }
 

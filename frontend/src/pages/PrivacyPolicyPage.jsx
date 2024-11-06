@@ -1,7 +1,7 @@
 // PrivacyPolicy.js
 import React from "react";
 
-const PrivacyPolicy = () => (
+const PrivacyPolicyPage = () => (
   <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
     <h1>Privacy Policy</h1>
     <p>Your privacy is important to us. This policy outlines how we collect, use, and protect your data.</p>
@@ -14,4 +14,4 @@ const PrivacyPolicy = () => (
   </div>
 );
 
-export default PrivacyPolicy;
+export default PrivacyPolicyPage;
