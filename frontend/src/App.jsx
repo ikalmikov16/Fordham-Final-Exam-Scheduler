@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SearchBar from "./components/SearchBar";
@@ -52,20 +53,29 @@ function App() {
   }, [courses]);
 
   return (
-    <>
+    <Router>
       <NavBar />
       <div className="app-container">
-        <SearchBar addCourse={addCourse} />
-        <div className="courses-schedule-container">
-          <Courses courses={courses} removeCourse={removeCourse} />
-          <Schedule
-            addEventCallback={(fn) => (addEventRef.current = fn)}
-            removeEventCallback={(fn) => (removeEventRef.current = fn)}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <SearchBar addCourse={addCourse} />
+                <div className="courses-schedule-container">
+                  <Courses courses={courses} removeCourse={removeCourse} />
+                  <Schedule
+                    addEventCallback={(fn) => (addEventRef.current = fn)}
+                    removeEventCallback={(fn) => (removeEventRef.current = fn)}
+                  />
+                </div>
+              </>
+            }
           />
-        </div>
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        </Routes>
       </div>
-      <PrivacyPolicy></PrivacyPolicy>
-    </>
+    </Router>
   );
 }
 
