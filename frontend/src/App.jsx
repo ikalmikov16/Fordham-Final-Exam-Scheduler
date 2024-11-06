@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import SearchBar from "./components/SearchBar";
 import Courses from "./components/Courses";
 import Schedule from "./components/Schedule";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -63,6 +64,7 @@ function App() {
           />
         </div>
       </div>
+      <PrivacyPolicy></PrivacyPolicy>
     </>
   );
 }
