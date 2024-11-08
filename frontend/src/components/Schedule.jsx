@@ -115,11 +115,11 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
     <div className="schedule-container">
       <div className="schedule-buttons-container">
         <div className="export-button">
-          <GoogleCalendarButton
+          {/* <GoogleCalendarButton
             isSignedIn={isSignedIn}
             onExport={isSignedIn ? exportToGoogleCalendar : signIn}
             onSignOut={signOut}
-          />
+          /> */}
           <AppleCalendarButton onExport={generateICS} />
         </div>
         <div className="schedule">
