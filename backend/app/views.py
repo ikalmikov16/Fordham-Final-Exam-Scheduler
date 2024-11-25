@@ -118,22 +118,19 @@ class CourseView(APIView):
             return Response({"error": "No file provided"}, status=HTTP_400_BAD_REQUEST)
 
         file = request.FILES["exam-schedule"]
-        df = pd.read_excel(file, skiprows=4, usecols="A:H")
+        df = pd.read_excel(file, skiprows=3, usecols="A:H")
 
         for i, row in df.iterrows():
             try:
-                # Format professor name
-                last_name, first_name = row["Instructor"].split(",", 1)
-                first_name = first_name.strip()
-                last_name = last_name.strip()
-                professor = f"{first_name} {last_name}"
-
+                # Get course details
                 course_info = row["Course"].split()
                 number = course_info[1]
                 section = course_info[2]
                 crn = course_info[3]
                 if len(crn) != 5:
                     crn = course_info[4]
+                    if len(crn) != 5:
+                        crn = course_info[5]
 
                 # Mark exam times as EST and convert to UTC
                 start_time_est = pytz.timezone("America/New_York").localize(
@@ -144,18 +141,22 @@ class CourseView(APIView):
                 )
                 start_time_utc = start_time_est.astimezone(pytz.UTC)
                 end_time_utc = end_time_est.astimezone(pytz.UTC)
-
-                major = majors.get(str(row["Department"]).strip(), "")
+                
+                major_tag = row["Department"]
+                if len(major_tag) > 4:
+                    major_tag = course_info[0] 
+                major = majors.get(str(major_tag).strip(), "")
                 if not major:
-                    print(row["Department"])
+                    print(major_tag)
+
 
                 course = {
                     "title": row["Title"].strip(),
                     "major": major,
-                    "professor": professor,
-                    "major_tag": row["Department"],
+                    "professor": row["Instructor"],
+                    "major_tag": major_tag,
                     "number": number,
-                    "major_and_number": f"{row['Department']} {number}",
+                    "major_and_number": f"{major_tag} {number}",
                     "section": section,
                     "crn": crn,
                     "location": row["Location"],
@@ -167,11 +168,10 @@ class CourseView(APIView):
 
                 if serializer.is_valid():
                     serializer.save()
-                if "crn" not in serializer.errors:
-                    print(serializer.errors)
+                if "crn" not in serializer.errors or not serializer.errors:
+                    print(i, course, "\n", serializer.errors)
             except Exception as e:
                 print(f"Error processing row {i}: {e}")
-
         return Response(
             {"message": "File processed successfully!"}, status=HTTP_201_CREATED
         )
