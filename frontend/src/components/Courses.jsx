@@ -39,7 +39,7 @@ const Courses = ({ courses, removeCourse }) => {
 
               <div className="course-left">
                 <div className="course-title">{course.title}</div>
-                <div className="course-info">{course.professor}</div>
+                <div className="course-info">Prof. {course.professor}</div>
                 <div className="course-info">
                   {course.major_and_number}, {course.section}
                 </div>

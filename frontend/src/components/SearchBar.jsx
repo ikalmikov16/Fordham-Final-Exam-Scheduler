@@ -42,8 +42,8 @@ const SearchBar = ({ addCourse }) => {
   // Render each suggestion item
   const renderSuggestion = (suggestion) => (
     <div className="suggestion-item">
-      {suggestion.title}, {suggestion.professor}, {suggestion.section},{" "}
-      {suggestion.major_and_number}
+      {suggestion.title} | {suggestion.major_and_number} {suggestion.section} |{" "}
+      Prof. {suggestion.professor} | CRN: {suggestion.crn}
     </div>
   );
 
