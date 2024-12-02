@@ -48,6 +48,30 @@ const HomePage = () => {
         </li>
       </ol>
 
+      <h2> How To Add to Google Calendar? </h2>
+      <ol>
+        <li>
+          <p>
+            Click "Add to Apple Calendar" after selecting your courses. This will download a "final-exams.ics" file.
+          </p>
+        </li>
+        <li>
+          <p>
+            Open <a href="https://calendar.google.com">Google Calendar</a>. 
+          </p>
+        </li>
+        <li>
+          <p>
+            Go to <b>Settings &gt; Import & export &gt; Upload the file</b>. 
+          </p>
+        </li>
+        <li>
+          <p>
+            Select your file and click <b>Import</b>.
+          </p>
+        </li>
+      </ol>
+
       <h2> Why Use This Tool? </h2>
       <p>
         Fordham publishes final exam schedules in an Excel sheet that requires
