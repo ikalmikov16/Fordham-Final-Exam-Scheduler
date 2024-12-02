@@ -79,7 +79,7 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
     URL.revokeObjectURL(url);
 
     alert(
-      "Your final exams schedule has been downloaded.\nOpen the \"final-exams.ics\" file and it will add it to your Apple Calendar.\n\nDon't worry it's not a virus, I promise :D"
+      "Add to Apple Calendar - Open the \"final-exams.ics\" file.\nAdd to Google Calendar - Follow instructions on Home Page\n\nDon't worry it's not a virus, I promise :D"
     );
   };
 

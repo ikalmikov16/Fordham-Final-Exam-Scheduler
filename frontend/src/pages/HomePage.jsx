@@ -42,7 +42,7 @@ const HomePage = () => {
         </li>
         <li>
           <p>
-            <b>Export Calendar:</b> Add to your Apple Calendar or save a
+            <b>Export Calendar:</b> Add to your Apple or Google Calendar or save a
             screenshot of your final exam schedule.
           </p>
         </li>
@@ -52,7 +52,7 @@ const HomePage = () => {
       <ol>
         <li>
           <p>
-            Click "Add to Apple Calendar" after selecting your courses. This will download a "final-exams.ics" file.
+            Click "Download Schedule" after selecting your courses. This will download a "final-exams.ics" file.
           </p>
         </li>
         <li>
