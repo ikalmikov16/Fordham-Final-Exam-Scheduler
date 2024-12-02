@@ -53,7 +53,9 @@ const HomePage = () => {
         Fordham publishes final exam schedules in an Excel sheet that requires
         you to manually search through, find your courses, and jot down the
         times and locations of your exams. This process can be time-consuming
-        and frustrating, but our website makes it easy.
+        and frustrating, but our website makes it easy. <br /><br />
+
+        Our data includes both RH and LC undergaduate final exam schedules.
       </p>
 
       <br />
