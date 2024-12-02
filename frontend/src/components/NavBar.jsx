@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import Nav from 'react-bootstrap/Nav';
+import Nav from "react-bootstrap/Nav";
 import "../styles/NavBar.css";
 import logo from "../assets/logo.png";
 
@@ -10,11 +10,11 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const navigateHome = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
   const navigateScheduler = () => {
-    navigate("/schedule")
-  }
+    navigate("/schedule");
+  };
 
   return (
     <Navbar data-bs-theme="dark" className="navbar">

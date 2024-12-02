@@ -23,8 +23,8 @@ const HomePage = () => {
       <div className="home-image">
         <img src={demo} alt="Demo" />
       </div>
-			<br />
-			
+      <br />
+
       <h2> How It Works? </h2>
       <ol>
         <li>
