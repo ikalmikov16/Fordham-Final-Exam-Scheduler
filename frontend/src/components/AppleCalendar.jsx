@@ -5,7 +5,7 @@ function AppleCalendarButton({ onExport }) {
   return (
     <Button onClick={onExport} variant="primary">
       {" "}
-      Download Schedule{" "}
+      Add to Apple or Google Calendar{" "}
     </Button>
   );
 }

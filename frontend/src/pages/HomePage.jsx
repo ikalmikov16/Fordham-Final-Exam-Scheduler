@@ -52,7 +52,7 @@ const HomePage = () => {
       <ol>
         <li>
           <p>
-            Click "Download Schedule" after selecting your courses. This will download a "final-exams.ics" file.
+            Select your courses and click <b>Add to Apple or Google Calendar</b>. This will download a <b>final-exams.ics</b> file.
           </p>
         </li>
         <li>
