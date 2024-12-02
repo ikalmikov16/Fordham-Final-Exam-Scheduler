@@ -15,7 +15,7 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
   const [view, setView] = useState("month");
   const [selectedDate, setSelectedDate] = useState(new Date(2024, 11, 1));
   const [isSignedIn, setIsSignedIn] = useState(false);
-  
+
   const { signIn, signOut, exportToGoogleCalendar } = useGoogleAuth(events);
   const colors = ["#FF5733", "#33FF57", "#3357FF"];
 
@@ -49,6 +49,7 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
   };
 
   const generateICS = () => {
+    // Initialize iCalendar content
     let icsFileContent = "BEGIN:VCALENDAR\nVERSION:2.0\n";
     events.forEach((event) => {
       icsFileContent +=
@@ -62,15 +63,24 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
     });
     icsFileContent += "END:VCALENDAR";
 
+    // Create a Blob and generate a temporary URL
     const blob = new Blob([icsFileContent], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
+
+    // Download ics file
     const a = document.createElement("a");
     a.href = url;
-    a.download = "events.ics";
+    a.download = "final-exams.ics"; // File name for download
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+
+    // Clean up the temporary URL
     URL.revokeObjectURL(url);
+
+    alert(
+      "Your final exams schedule has been downloaded.\nOpen the \"final-exams.ics\" file and it will add it to your Apple Calendar.\n\nDon't worry it's not a virus."
+    );
   };
 
   useEffect(() => {
@@ -122,6 +132,7 @@ const Schedule = ({ addEventCallback, removeEventCallback }) => {
           /> */}
           <AppleCalendarButton onExport={generateICS} />
         </div>
+
         <div className="schedule">
           <Scheduler
             events={events}

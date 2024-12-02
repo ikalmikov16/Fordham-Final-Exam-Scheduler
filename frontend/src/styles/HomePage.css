@@ -1,0 +1,36 @@
+.home-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: 15px;
+}
+
+.home-container h1{
+    font-size: 40px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.home-container h2{
+    font-size: 28px;
+}
+
+.home-container p{
+    font-size: 17px;
+}
+
+.home-image{
+    display: flex;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.home-image img{
+    width: 100%;
+    height: auto;
+}
+

@@ -25,7 +25,7 @@ const SearchBar = ({ addCourse }) => {
 
   // Debounce the fetchSuggestions function to wait until the user stops typing
   const debouncedFetchSuggestions = useCallback(
-    debounce(fetchSuggestions, 500),
+    debounce(fetchSuggestions, 250),
     []
   );
 
@@ -62,7 +62,7 @@ const SearchBar = ({ addCourse }) => {
 
   // Define input props for Autosuggest
   const inputProps = {
-    placeholder: "Search for courses...",
+    placeholder: "Search by course, major, professor, or CRN... ",
     value,
     onChange,
   };

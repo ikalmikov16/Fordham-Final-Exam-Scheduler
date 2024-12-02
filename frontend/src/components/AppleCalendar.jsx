@@ -1,11 +1,12 @@
-// src/components/AppleCalendarButton.js
+import Button from "react-bootstrap/Button";
 import React from "react";
 
 function AppleCalendarButton({ onExport }) {
   return (
-    <button className="btn btn-secondary ms-2" onClick={onExport}>
-      Export to Apple Calendar
-    </button>
+    <Button onClick={onExport} variant="primary">
+      {" "}
+      Add to Apple Calendar{" "}
+    </Button>
   );
 }
 
