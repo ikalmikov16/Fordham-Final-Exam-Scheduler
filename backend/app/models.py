@@ -12,7 +12,7 @@ class Course(models.Model):
     section = models.CharField(max_length=3)
     crn = models.CharField(max_length=5, unique=True)
 
-    location = models.CharField(max_length=20)
+    location = models.CharField(max_length=50)
     exam_start_time = models.DateTimeField()
     exam_end_time = models.DateTimeField()
 
